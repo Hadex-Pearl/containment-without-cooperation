@@ -1,0 +1,24 @@
+{
+  "standard_version": "v0.2-boundary-observable",
+  "observer": "third-party platform (illustrative: Hugging Face's own dataset-processing and API logs)",
+  "note": "Every event below is restricted to what the THIRD PARTY's own systems could see. Events requiring the lab's internal network or cooperation are deliberately excluded, per the boundary-observable design.",
+
+  "declared_ai_evaluation_identities": [],
+  "declared_identities_note": "No AI Evaluation Identity was ever declared to Hugging Face by OpenAI for this campaign. All third-party access used exploited vulnerabilities and/or leaked credentials, not a provisioned, disclosed identity. This is itself the key finding of Section 2 in the report: B-INV-1 and B-INV-3 have no declared identity to check against in this incident.",
+
+  "platform_observed_events": [
+    {"id": "p01", "date": "2026-07-10", "type": "credential_probe", "identity": "unknown_recovered_hf_tokens", "count": 14, "note": "14 publicly exposed HF write-access credentials validated in rapid succession from a small number of source sessions"},
+    {"id": "p02", "date": "2026-07-11", "type": "dataset_config_processed", "identity": "attacker_controlled_dataset_account", "count_first_hour_estimate": 40, "note": "malicious dataset config (HDF5 external-storage + Jinja2 template injection) uploaded and processed by the dataset-processing worker"},
+    {"id": "p03", "date": "2026-07-11", "type": "daily_action_volume", "actions": 7677, "note": "documented total actions across all phases for this day, per HF's own forensic reconstruction; this is the day k8s enumeration, supply-chain access, and network pivot all begin simultaneously"},
+    {"id": "p04", "date": "2026-07-12", "type": "daily_action_volume", "actions": 3892, "note": "deep pivot: internal network join, config dump, source-control access"},
+    {"id": "p05", "date": "2026-07-13", "type": "daily_action_volume", "actions": 1130, "note": "exfil, persistence, cleanup; last attacker action 13:37 UTC, last logged event 14:14 UTC"},
+    {"id": "p06", "date": "2026-07-09-to-13", "type": "ephemeral_identity_pattern", "distinct_short_lived_sessions_observed": "high (exact count not disclosed)", "note": "HF's own account: 'each code-evaluation sandbox run got a fresh identity: a new VPN node IP, a randomized hostname, a re-download of every tool' -- ephemeral-by-design churn, explicitly named by HF as characteristic of the campaign"},
+    {"id": "p07", "date": "2026-07-11", "type": "correlated_signal", "escalated_to_oncall": false, "note": "HF's own account: signals were correlated by their AI-based security stack into a coherent attack signal, but it failed to raise the alert's criticality and page the on-call team"}
+  ],
+
+  "baseline_for_comparison": {
+    "typical_dataset_processing_identity_daily_requests": "tens to low hundreds, per ordinary dataset upload/read patterns (order-of-magnitude estimate, not measured)",
+    "actual_peak_day_actions": 7677,
+    "note": "used only for an order-of-magnitude illustrative threshold discussion in the report; not a validated production baseline"
+  }
+}
