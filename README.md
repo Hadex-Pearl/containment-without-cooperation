@@ -24,7 +24,7 @@ regardless of whether it does.
 | **B-INV-1** — Single-purpose scope | Preventive (requires declared AEI) | A declared AEI's credential is never used outside its declared scope |
 | **B-INV-2** — No silent identity churn | Detective (no declaration required) | Clusters of new, short-lived identities matching a revoked identity's behavior are flagged |
 | **B-INV-3** — Cross-tenant boundary | Preventive (requires declared AEI) | A declared AEI never successfully accesses another tenant's resources |
-| **B-INV-4** — Volume-to-task ratio | Detective (no declaration required) | Any identity's request volume is throttled once it exceeds its apparent task's envelope |
+| **B-INV-4** — Volume-to-task ratio | Detective (no declaration required) | Any identity's request volume is flagged once it exceeds its apparent task's envelope |
 
 Applied to the July 2026 OpenAI/Hugging Face incident, only the two detective invariants
 fire. No AEI was ever declared for that campaign, so the preventive pair correctly reports
@@ -39,10 +39,19 @@ cooperation.
 python3 boundary_checker.py boundary_trace.json
 ```
 
-Requires Python 3, standard library only, no external dependencies. Output is a JSON
-Boundary Conformance Record: one of `pass`, `fail`, or
+The checker requires Python 3 and the standard library only. Output is JSON with two
+blocks: a Boundary Conformance Record giving one of `pass`, `fail`, or
 `not_applicable_no_declared_identity` per invariant, with references to any violating
-event IDs.
+event IDs; and a `detection_latency_estimate` comparing a volume-based check against the
+incident's actual correlation-to-containment timeline.
+
+To regenerate the figure:
+
+```bash
+python3 build_figure.py
+```
+
+`build_figure.py` requires matplotlib.
 
 ## What the illustrative trace is, and is not
 
@@ -55,16 +64,14 @@ example, not new evidence about what happened.
 
 ## Status
 
-v0.2, research prototype produced during a research sprint. Not deployed, not calibrated
-against real platform traffic, not audited. See `report.pdf` for full methodology,
-results, limitations, and dual-use considerations.
+v0.2, research prototype produced during a research sprint. Not deployed, not calibrated against real platform traffic, not audited.
 
 ## Repository contents
 
-- `report.pdf` — full write-up
 - `boundary_checker.py` — reference monitor
 - `boundary_trace.json` — illustrative event trace
-- `detection_latency_figure.png` — daily action volume vs. illustrative threshold (report Section 4)
+- `build_figure.py` — plots daily action volume vs. the illustrative threshold
+- `detection_latency_figure.png` — the generated plot
 - `CHANGELOG.md` — version history, including the self-attestation design (v0.1) this superseded
 - `LICENSE` — MIT
 
@@ -87,7 +94,7 @@ BibTeX:
   title        = {Containment Without Cooperation: A Verifiable Standard for
                    Third-Party Platforms Hosting AI Evaluation Traffic},
   year         = {2026},
-  howpublished = {\url{https://github.com/Hadex-Pearl/containment-without-cooperation},
+  howpublished = {\url{https://github.com/Hadex-Pearl/containment-without-cooperation}},
   note         = {Research conducted at the AI Incident Response Sprint, September 2026}
 }
 ```

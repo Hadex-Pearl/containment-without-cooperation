@@ -11,7 +11,7 @@ This split matters and is checked explicitly:
   - B-INV-1 and B-INV-3 are PREVENTIVE and require a declared AEI to check
     against. If no AEI was ever declared for the identity in question, the
     verdict is "not_applicable_no_declared_identity" -- NOT "pass". This
-    distinction is the report's central finding: these two invariants only
+    distinction is this project's central finding: these two invariants only
     protect the cooperative case.
   - B-INV-2 and B-INV-4 are DETECTIVE and behavioral. They require no
     declaration and apply to any identity, which is why they are the ones
@@ -21,7 +21,7 @@ This split matters and is checked explicitly:
 import json
 import sys
 
-BASELINE_DAILY_THRESHOLD = 500  # illustrative order-of-magnitude daily-action threshold; see report Sec. 6.
+BASELINE_DAILY_THRESHOLD = 500  # illustrative order-of-magnitude daily-action threshold.
 # Set in daily terms deliberately: the public record gives daily action counts, not hourly ones, so an
 # hourly threshold would imply precision this project does not have. See Limitations.
 
@@ -31,7 +31,7 @@ def load_trace(path):
         return json.load(f)
 
 
-def has_declared_aei(trace, identity=None):
+def has_declared_aei(trace):
     return len(trace.get("declared_ai_evaluation_identities", [])) > 0
 
 
@@ -40,7 +40,7 @@ def b_inv1_single_purpose_scope(trace):
     if not has_declared_aei(trace):
         return (name, "not_applicable_no_declared_identity", [],
                 "no AEI was ever declared for this campaign; this invariant cannot be evaluated "
-                "against undeclared, exploit-based access. See report Sec. 2.")
+                "against undeclared, exploit-based access.")
     # (declared-AEI scope-checking logic would run here if an AEI existed)
     return (name, "pass", [], "")
 
@@ -63,7 +63,7 @@ def b_inv3_cross_tenant_boundary(trace):
         return (name, "not_applicable_no_declared_identity", [],
                 "no AEI was ever declared; without a declared provisioning tenant, cross-tenant "
                 "boundary violation cannot be distinguished from ordinary unauthorized access by "
-                "this invariant alone. See report Sec. 2.")
+                "this invariant alone.")
     return (name, "pass", [], "")
 
 
@@ -90,10 +90,10 @@ def estimate_detection_latency_hours(trace):
     return {
         "peak_day": peak_day["date"],
         "peak_day_actions": peak_day["actions"],
-        "estimated_hours_to_threshold_breach": "1-3 (order-of-magnitude estimate; see report Sec. 6, not measured)",
+        "estimated_hours_to_threshold_breach": "1-3 (order-of-magnitude estimate, not measured)",
         "actual_time_correlated_signal_generated_but_not_escalated": "per platform's own account, a coherent "
             "signal WAS generated but escalation failed; total window from first platform-visible activity "
-            "to containment was on the order of ~2.5 days"
+            "to containment was on the order of ~3.5 days"
     }
 
 
