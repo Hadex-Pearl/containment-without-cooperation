@@ -68,6 +68,7 @@ v0.2, research prototype produced during a research sprint. Not deployed, not ca
 
 ## Repository contents
 
+- `AI_Incidence.pdf` — full paper: methods, results, limitations, and dual-use considerations
 - `boundary_checker.py` — reference monitor
 - `boundary_trace.json` — illustrative event trace
 - `build_figure.py` — plots daily action volume vs. the illustrative threshold
