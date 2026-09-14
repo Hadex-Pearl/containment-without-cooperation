@@ -1,13 +1,13 @@
 # Data provenance:
-#   07-11, 07-12, 07-13 action counts match boundary_trace.json entries p03, p04, p05.
-#   07-09 and 07-10 are both shown for timeline context, but for two different reasons:
-#     - 07-09 falls outside the boundary-observable trace by design: that activity occurred
-#       on third-party infrastructure other than Hugging Face's own platform (Modal), so the
-#       platform in question could not have observed it at all.
-#     - 07-10 IS platform-visible and IS in boundary_trace.json, as p01. It is absent from
-#       this figure's action-volume series only because p01 records a different metric --
-#       14 credential validations -- than the daily total-action count plotted here.
-#   Both counts are sourced from the same Hugging Face technical timeline post.
+#   07-10, 07-11, 07-12, 07-13 action counts match boundary_trace.json entries p08, p03,
+#   p04, p05 exactly. 07-10 is platform-visible: Hugging Face's own logs record that day's
+#   1,135 actions (p08), alongside the 14 credential validations logged separately as p01.
+#   07-09 is the only date here that falls outside the boundary-observable trace, and it
+#   does so by design: that activity occurred on third-party infrastructure other than
+#   Hugging Face's own platform (Modal), so the platform in question could not have
+#   observed it at all. It is shown for timeline context only, greyed out to mark it as
+#   unobservable. Its count comes from the same Hugging Face technical timeline post as
+#   the rest.
 
 import matplotlib
 matplotlib.use("Agg")

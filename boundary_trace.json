@@ -9,6 +9,7 @@
   "platform_observed_events": [
     {"id": "p01", "date": "2026-07-10", "type": "credential_probe", "identity": "unknown_recovered_hf_tokens", "count": 14, "note": "14 publicly exposed HF write-access credentials validated in rapid succession from a small number of source sessions"},
     {"id": "p02", "date": "2026-07-11", "type": "dataset_config_processed", "identity": "attacker_controlled_dataset_account", "count_first_hour_estimate": 40, "note": "malicious dataset config (HDF5 external-storage + Jinja2 template injection) uploaded and processed by the dataset-processing worker"},
+    {"id": "p08", "date": "2026-07-10", "type": "daily_action_volume", "actions": 1135, "note": "first platform-visible day; already exceeds the illustrative 500/day threshold"},
     {"id": "p03", "date": "2026-07-11", "type": "daily_action_volume", "actions": 7677, "note": "documented total actions across all phases for this day, per HF's own forensic reconstruction; this is the day k8s enumeration, supply-chain access, and network pivot all begin simultaneously"},
     {"id": "p04", "date": "2026-07-12", "type": "daily_action_volume", "actions": 3892, "note": "deep pivot: internal network join, config dump, source-control access"},
     {"id": "p05", "date": "2026-07-13", "type": "daily_action_volume", "actions": 1130, "note": "exfil, persistence, cleanup; last attacker action 13:37 UTC, last logged event 14:14 UTC"},
